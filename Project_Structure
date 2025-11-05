@@ -1,0 +1,23 @@
+slotswapper/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── utils/
+│   │   └── server.ts
+│   ├── .env.example
+│   ├── package.json
+│   └── tsconfig.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── App.tsx
+│   ├── package.json
+│   └── tsconfig.json
+├── docker-compose.yml
+└── README.md
