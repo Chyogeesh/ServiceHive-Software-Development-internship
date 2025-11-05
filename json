@@ -1,0 +1,42 @@
+{
+  "message": "Swap request created successfully",
+  "request": {
+    "id": "request-uuid",
+    "status": "PENDING",
+    "offerSlotId": "event-uuid-1",
+    "requestSlotId": "event-uuid-2",
+    "createdAt": "2024-01-15T10:30:00Z"
+  }
+}
+
+CREATE TABLE users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE events (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(255) NOT NULL,
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL,
+  status VARCHAR(20) DEFAULT 'BUSY' CHECK (status IN ('BUSY', 'SWAPPABLE', 'SWAP_PENDING')),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE swap_requests (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  offer_slot_id UUID REFERENCES events(id) ON DELETE CASCADE,
+  request_slot_id UUID REFERENCES events(id) ON DELETE CASCADE,
+  requester_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  recipient_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  status VARCHAR(20) DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+cd backend
+npm test
